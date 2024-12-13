@@ -1,5 +1,6 @@
 import { PostgresDatabaseAdapter } from "@ai16z/adapter-postgres";
 import { SqliteDatabaseAdapter } from "@ai16z/adapter-sqlite";
+import { PineconeClientInterface } from "@ai16z/client-pinecone";
 import { AutoClientInterface } from "@ai16z/client-auto";
 import { DirectClientInterface } from "@ai16z/client-direct";
 import { DiscordClientInterface } from "@ai16z/client-discord";
@@ -333,6 +334,11 @@ export async function initializeClients(
     if (clientTypes.includes("arena")) {
         const arenaClients = await ArenaClientInterface.start(runtime);
         clients.push(arenaClients);
+    }
+
+     if (clientTypes.includes("pinecone")) {
+        const pineconeClients = await PineconeClientInterface.start(runtime);
+        clients.push(pineconeClients);
     }
 
     if (character.plugins?.length > 0) {
